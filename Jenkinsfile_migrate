@@ -1,0 +1,33 @@
+pipeline {
+  agent  {
+
+        label 'ahq-devinsider01'
+
+        } 
+  environment {
+    db_user=credentials('db_name_flyway')
+    db_pass=credentials('db_password_flyway')
+  }
+  stages {
+    stage('Verify version') {
+      steps {
+        sh 'docker run --rm flyway/flyway:9.3.1 version'
+      }
+    }
+    stage('migrate') {
+      steps {
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 -user=$db_user -password=$db_pass migrate'
+      }
+    }
+    stage('validate') {
+      steps {
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 -user=$db_user -password=$db_pass validate'
+      }
+    }
+    stage('info') {
+      steps {
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 -user=$db_user -password=$db_pass info'
+      }
+    }
+  }
+}
