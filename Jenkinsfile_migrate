@@ -7,8 +7,8 @@ pipeline {
   environment {
     // db_user=credentials('db_name_flyway')
     // db_pass=credentials('db_password_flyway')
-    db_user ='flywayservices'
-    db_pass = '@ngu$2o22!'
+    // db_user ='flywayservices'
+    // db_pass = '@ngu$2o22!'
   }
   stages {
     stage('Verify version') {
@@ -18,17 +18,17 @@ pipeline {
     }
     stage('migrate') {
       steps {
-        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 -user=$db_user -password=$db_pass migrate'
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1  migrate'
       }
     }
     stage('validate') {
       steps {
-        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 -user=$db_user -password=$db_pass validate'
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 validate'
       }
     }
     stage('info') {
       steps {
-        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1 -user=$db_user -password=$db_pass info'
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1  info'
       }
     }
   }
