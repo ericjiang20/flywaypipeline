@@ -5,7 +5,7 @@ pipeline {
 
         } 
   environment {
-    dbuser = credentials(db_name_flyway)
+    dbuser = credentials('db_name_flyway')
     // db_pass=credentials('db_password_flyway')
     // db_user ='flywayservices'
     // db_pass = '@ngu$2o22!'
