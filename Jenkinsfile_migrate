@@ -4,13 +4,19 @@ pipeline {
         label 'ahq-devinsider01'
 
         } 
-  // environment {
-  //   // dbuser = credentials('db_name_flyway')
-  //   db_pass=credentials('db_password_flyway')
-  //   // db_user ='flywayservices'
-  //   // db_pass = '@ngu$2o22!'
-  // }
+  environment {
+    // dbuser = credentials('db_name_flyway')
+    MY_CRED=credentials('db_password_flyway')
+    // db_user ='flywayservices'
+    // db_pass = '@ngu$2o22!'
+  }
   stages {
+    stage('Load Credentials') {
+                steps {
+                    echo "Username is $MY_CRED_USR"
+                    echo "Password is $MY_CRED_PSW"
+                }
+
     stage('Verify version') {
       steps {
         sh 'docker run --rm flyway/flyway:9.3.1 version'
