@@ -23,6 +23,11 @@ pipeline {
         sh 'docker run --rm flyway/flyway:9.3.1 version'
       }
     }
+    stage('repair') {
+      steps {
+        sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1  repair'
+      }
+    }
     stage('migrate') {
       steps {
         sh 'docker run --rm -v $WORKSPACE/sql:/flyway/sql -v $WORKSPACE/conf:/flyway/conf flyway/flyway:9.3.1  migrate'
