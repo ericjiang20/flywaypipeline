@@ -16,6 +16,7 @@ pipeline {
                     echo "Username is $MY_CRED_USR"
                     echo "Password is $MY_CRED_PSW"
                 }
+    }
 
     stage('Verify version') {
       steps {
