@@ -1,9 +1,3 @@
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[CommonCompany](
 	[CompanyId] [int] NOT NULL,
 	[CompanyName] [varchar](50) NOT NULL,
